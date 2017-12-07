@@ -1,3 +1,5 @@
+---
+
 AWSTemplateFormatVersion: '2010-09-09'
 
 Metadata:
@@ -76,27 +78,35 @@ Resources:
     Type: AWS::Events::Rule
     Properties:
       Description: Instance Start scheduler
-      ScheduleExpression: !Sub "cron(0 ${StartHour} ? * * *)"
+      ScheduleExpression: !Sub "cron(0 ${StartHourGMT} ? * * *)"
       Targets:
       - Arn: !GetAtt StartStopLambda.Arn
         Id: StartStopLambda_Target
 
-  StopScheduler:
-    Type: AWS::Events::Rule
-    Properties:
-      Description: Instance Stop scheduler
-      ScheduleExpression: !Sub "cron(0 ${StartHour} ? * * *)"
-      Targets:
-      - Arn: !GetAtt StartStopLambda.Arn
-        Id: StartStopLambda_Target
-
-  StartStopSchedulerPermission:
+  StartSchedulerPermission:
     Type: AWS::Lambda::Permission
     Properties:
       Action: lambda:InvokeFunction
       FunctionName: !Ref StartStopLambda
       Principal: events.amazonaws.com
-      SourceArn: !GetAtt StartStopScheduler.Arn
+      SourceArn: !GetAtt StartScheduler.Arn
+
+  StopScheduler:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: Instance Stop scheduler
+      ScheduleExpression: !Sub "cron(0 ${StopHourGMT} ? * * *)"
+      Targets:
+      - Arn: !GetAtt StartStopLambda.Arn
+        Id: StartStopLambda_Target
+
+  StopSchedulerPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref StartStopLambda
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt StopScheduler.Arn
 
   StartStopLambda:
     Type: AWS::Lambda::Function
@@ -107,7 +117,7 @@ Resources:
       Handler: index.lambda_handler
       MemorySize: 128
       Role: !GetAtt StartStopRole.Arn
-      Runtime: python3
+      Runtime: python3.6
       Timeout: 10
       Code:
         ZipFile:

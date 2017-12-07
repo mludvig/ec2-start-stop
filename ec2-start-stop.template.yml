@@ -3,9 +3,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 
 Metadata:
-  Author: Michael Ludvig <michael.ludvig@enterpriseit.co.nz>
+  Author: Michael Ludvig @ aws.nz
   Description: |-
-    Demo of scheduled instance Stop/Start
+    Demo of scheduled EC2 instance Stop/Start using
+    Lambda function and CloudWatch Events scheduler
 
 Parameters:
   SubnetId:

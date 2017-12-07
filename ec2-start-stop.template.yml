@@ -82,6 +82,7 @@ Resources:
       Targets:
       - Arn: !GetAtt StartStopLambda.Arn
         Id: StartStopLambda_Target
+        Input: !Sub '{ "instance_id": "${Instance}", "action": "start" }'
 
   StartSchedulerPermission:
     Type: AWS::Lambda::Permission
@@ -99,6 +100,7 @@ Resources:
       Targets:
       - Arn: !GetAtt StartStopLambda.Arn
         Id: StartStopLambda_Target
+        Input: !Sub '{ "instance_id": "${Instance}", "action": "stop" }'
 
   StopSchedulerPermission:
     Type: AWS::Lambda::Permission

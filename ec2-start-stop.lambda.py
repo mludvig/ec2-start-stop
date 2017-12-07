@@ -31,4 +31,4 @@ def lambda_handler(event, context):
         result = ec2.stop_instances(InstanceIds = [instance_id])
         info = result['StoppingInstances'][0]
 
-    print("%s - %s -> %s" % (info['InstanceId'], info['PreviousState']['Name'], info['CurrentState']['Name'])
+    print("%s - %s -> %s" % (info['InstanceId'], info['PreviousState']['Name'], info['CurrentState']['Name']))

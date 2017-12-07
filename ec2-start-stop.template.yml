@@ -70,8 +70,8 @@ Resources:
         PolicyDocument:
           Statement:
           - Action:
-            - ec2:StartInstance
-            - ec2:StopInstance
+            - ec2:StartInstances
+            - ec2:StopInstances
             Effect: Allow
             Resource: '*'
 

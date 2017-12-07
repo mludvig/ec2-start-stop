@@ -24,4 +24,11 @@ def lambda_handler(event, context):
         raise
         return
 
-    print("%s instance %s" % (instance_id, action))
+    if action == 'start':
+        result = ec2.start_instances(InstanceIds = [instance_id])
+        info = result['StartingInstances'][0]
+    else:
+        result = ec2.stop_instances(InstanceIds = [instance_id])
+        info = result['StoppingInstances'][0]
+
+    print("%s - %s -> %s" % (info['InstanceId'], info['PreviousState']['Name'], info['CurrentState']['Name'])

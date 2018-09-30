@@ -132,7 +132,7 @@ Resources:
           - '
 
             '
-          - - ""
+          -
             - "#!/usr/bin/env python3"
             - ""
             - "# Very simple EC2 Start/Stop lambda function."

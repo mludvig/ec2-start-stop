@@ -128,5 +128,5 @@ Resources:
           - '
 
             '
-          - - ""
+          -
             - "%%{ec2-start-stop.lambda.py}%%"

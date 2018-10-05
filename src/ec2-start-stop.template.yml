@@ -13,19 +13,15 @@ Parameters:
     Type: AWS::EC2::Instance::Id
     Description: Existing instance ID
 
-  StartHourGMT:
-    Description: GMT Timezone hour when the Instance will be started.
-    Type: Number
-    MaxValue: 23
-    MinValue: 0
-    Default: 17
+  StartCronExpression:
+    Description: Cron-like expression when the Instance will be started (GTM Timezone!)
+    Type: String
+    Default: "0 17 ? * * *"
 
-  StopHourGMT:
-    Description: GMT Timezone hour when the Instance will be stopped.
-    Type: Number
-    MaxValue: 23
-    MinValue: 0
-    Default: 6
+  StopCronExpression:
+    Description: Cron-like expression when the Instance will be started (GTM Timezone!)
+    Type: String
+    Default: "0 6 ? * * *"
 
 Resources:
   StartStopRole:
@@ -64,7 +60,7 @@ Resources:
     Type: AWS::Events::Rule
     Properties:
       Description: Instance Start scheduler
-      ScheduleExpression: !Sub "cron(0 ${StartHourGMT} ? * * *)"
+      ScheduleExpression: !Sub "cron(${StartCronExpression})"
       Targets:
       - Arn: !GetAtt StartStopLambda.Arn
         Id: StartStopLambda_Target
@@ -82,7 +78,7 @@ Resources:
     Type: AWS::Events::Rule
     Properties:
       Description: Instance Stop scheduler
-      ScheduleExpression: !Sub "cron(0 ${StopHourGMT} ? * * *)"
+      ScheduleExpression: !Sub "cron(${StopCronExpression})"
       Targets:
       - Arn: !GetAtt StartStopLambda.Arn
         Id: StartStopLambda_Target

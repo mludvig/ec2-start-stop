@@ -8,7 +8,13 @@ Usage
 -----
 
 Deploy `ec2-start-stop.yml` using CloudFormation, change the stack parameters
-as necessary (namely Start / Stop hour in GMT timezone and AMI Image ID).
+as necessary.
+
+For help with the **Start / StopCronExpression** syntax check out
+[Schedule Expressions for Rules](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html).
+
+Note that the Start/Stop time is in **GMT Timezone** (yeah, what an annoyance for
+us in regions that change to and from Daylight Saving Time 2x per year...).
 
 Make changes
 ------------

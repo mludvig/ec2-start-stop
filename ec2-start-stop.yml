@@ -38,8 +38,6 @@ Resources:
           Effect: Allow
           Principal:
             Service: lambda.amazonaws.com
-      ManagedPolicyArns:
-      - arn:aws:iam::aws:policy/ReadOnlyAccess
       Path: /
       Policies:
       - PolicyName: CloudWatchLogsPolicy
@@ -58,7 +56,7 @@ Resources:
             - ec2:StartInstances
             - ec2:StopInstances
             Effect: Allow
-            Resource: '*'
+            Resource: !Sub 'arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:instance/${InstanceId}'
 
   StartScheduler:
     Type: AWS::Events::Rule

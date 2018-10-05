@@ -13,14 +13,9 @@ Metadata:
     Lambda function and CloudWatch Events scheduler
 
 Parameters:
-  SubnetId:
-    Type: AWS::EC2::Subnet::Id
-    Description: Subnet where to launch the EC2 instance
-
-  ImageId:
-    Type: String
-    Description: AMI ID
-    Default: ami-ff4ea59d   # https://aws.amazon.com/amazon-linux-ami/
+  InstanceId:
+    Type: AWS::EC2::Instance::Id
+    Description: Existing instance ID
 
   StartHourGMT:
     Description: GMT Timezone hour when the Instance will be started.
@@ -37,16 +32,6 @@ Parameters:
     Default: 6
 
 Resources:
-  Instance:
-    Type: AWS::EC2::Instance
-    Properties:
-      ImageId: !Ref ImageId
-      InstanceType: t2.micro
-      SubnetId: !Ref SubnetId
-      Tags:
-      - Key: Name
-        Value: !Ref AWS::StackName
-
   StartStopRole:
     Type: AWS::IAM::Role
     Properties:
@@ -87,7 +72,7 @@ Resources:
       Targets:
       - Arn: !GetAtt StartStopLambda.Arn
         Id: StartStopLambda_Target
-        Input: !Sub '{ "instance_id": "${Instance}", "action": "start" }'
+        Input: !Sub '{ "instance_id": "${InstanceId}", "action": "start" }'
 
   StartSchedulerPermission:
     Type: AWS::Lambda::Permission
@@ -105,7 +90,7 @@ Resources:
       Targets:
       - Arn: !GetAtt StartStopLambda.Arn
         Id: StartStopLambda_Target
-        Input: !Sub '{ "instance_id": "${Instance}", "action": "stop" }'
+        Input: !Sub '{ "instance_id": "${InstanceId}", "action": "stop" }'
 
   StopSchedulerPermission:
     Type: AWS::Lambda::Permission
@@ -120,7 +105,7 @@ Resources:
     Properties:
       Environment:
         Variables:
-          instance_id: !Ref Instance
+          instance_id: !Ref InstanceId
       Handler: index.lambda_handler
       MemorySize: 128
       Role: !GetAtt StartStopRole.Arn

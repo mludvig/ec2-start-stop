@@ -13,13 +13,13 @@ as necessary (namely Start / Stop hour in GMT timezone and AMI Image ID).
 Make changes
 ------------
 
-The main template `ec2-start-stop.yml` has been generated from `ec2-start-stop.template.yml`
-to which the lambda function code from `ec2-start-stop.lambda.py` has been inserted using
-`import-files.py`.
+The main template `ec2-start-stop.yml` has been generated from `src/ec2-start-stop.template.yml`
+to which the lambda function code from `src/ec2-start-stop.lambda.py` has been inserted using
+`src/import-files.py`.
 
 **Don't edit the generated `ec2-start-stop.yml` template!**
 
-Instead modify the _"template-template"_ `ec2-start-stop.template.yml` and/or `ec2-start-stop.lambda.py`
+Instead modify the _"template-template"_ `src/ec2-start-stop.template.yml` and/or `src/ec2-start-stop.lambda.py`
 and run `make` or
 
     ~/ec2-start-stop $ make

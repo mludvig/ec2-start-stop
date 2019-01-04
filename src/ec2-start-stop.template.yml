@@ -14,12 +14,12 @@ Parameters:
     Description: Existing instance ID
 
   StartCronExpression:
-    Description: Cron-like expression when the Instance will be started (GTM Timezone!)
+    Description: Cron-like expression when the Instance will be started (UTC Timezone!)
     Type: String
     Default: "0 17 ? * * *"
 
   StopCronExpression:
-    Description: Cron-like expression when the Instance will be started (GTM Timezone!)
+    Description: Cron-like expression when the Instance will be stopped (UTC Timezone!)
     Type: String
     Default: "0 6 ? * * *"
 
